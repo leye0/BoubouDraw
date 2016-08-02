@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainView"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/hMenu"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="52dp">
+        <Button
+            android:background="#f00"
+            android:onClick="SetPaintColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/color0" />
+        <Button
+            android:background="#0f0"
+            android:onClick="SetPaintColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/color1" />
+        <Button
+            android:background="#00f"
+            android:onClick="SetPaintColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/color2" />
+        <Button
+            android:background="#ff0"
+            android:onClick="SetPaintColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/color3" />
+        <Button
+            android:background="#0ff"
+            android:onClick="SetPaintColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/color4" />
+        <Button
+            android:background="#f0f"
+            android:onClick="SetPaintColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/color5" />
+        <Button
+            android:background="#f90"
+            android:onClick="SetPaintColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/color6" />
+        <Button
+            android:background="#09f"
+            android:onClick="SetPaintColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/color7" />
+        <Button
+            android:background="#0f9"
+            android:onClick="SetPaintColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/color8" />
+        <Button
+            android:background="#90f"
+            android:onClick="SetPaintColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/color9" />
+        <Button
+            android:background="#f09"
+            android:onClick="SetPaintColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/color10" />
+        <Button
+            android:background="#950"
+            android:onClick="SetPaintColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/color11" />
+        <Button
+            android:background="#000"
+            android:onClick="SetPaintColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/color12" />
+        <Button
+            android:background="#50f"
+            android:onClick="SetPaintColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/color13" />
+        <Button
+            android:background="@android:color/holo_blue_bright"
+            android:onClick="SetPaintColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/color14" />
+        <Button
+            android:background="@android:color/holo_green_dark"
+            android:onClick="SetPaintColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/color15" />
+        <Button
+            android:background="@android:color/white"
+            android:onClick="SetPaintColor"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/color15" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/hMenu2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="52dp">
+        <ImageButton
+            android:src="@drawable/i0"
+            android:tag="i0"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/text0"
+            android:adjustViewBounds="true" />
+        <ImageButton
+            android:src="@drawable/i1"
+            android:tag="i1"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:onClick="SetPaintTexture"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/text1" />
+        <ImageButton
+            android:src="@drawable/i2"
+            android:tag="i2"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:onClick="SetPaintTexture"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/text2" />
+        <ImageButton
+            android:src="@drawable/i3"
+            android:tag="i3"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:onClick="SetPaintTexture"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/text3" />
+        <ImageButton
+            android:src="@drawable/i4"
+            android:tag="i4"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:onClick="SetPaintTexture"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/text4" />
+        <ImageButton
+            android:src="@drawable/i5"
+            android:tag="i5"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:onClick="SetPaintTexture"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/text5" />
+        <ImageButton
+            android:src="@drawable/i6"
+            android:tag="i6"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:onClick="SetPaintTexture"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/text6" />
+        <ImageButton
+            android:src="@drawable/i7"
+            android:tag="i7"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:onClick="SetPaintTexture"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/text7" />
+        <ImageButton
+            android:src="@drawable/i8"
+            android:tag="i8"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:onClick="SetPaintTexture"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/text8" />
+        <ImageButton
+            android:src="@drawable/i9"
+            android:tag="i9"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:onClick="SetPaintTexture"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/text9" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/vMenu"
+            android:layout_width="26dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <ImageButton
+                android:src="@drawable/brush"
+                android:background="@android:color/white"
+                android:tag="pencil"
+                android:padding="0dp"
+                android:onClick="SetShape"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/shape0" />
+            <ImageButton
+                android:src="@drawable/circle"
+                android:background="@android:color/white"
+                android:tag="circle"
+                android:padding="0dp"
+                android:onClick="SetShape"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/shape1" />
+            <ImageButton
+                android:src="@drawable/line"
+                android:background="@android:color/white"
+                android:tag="line"
+                android:padding="0dp"
+                android:onClick="SetShape"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/shape2" />
+            <ImageButton
+                android:src="@drawable/rectangle"
+                android:background="@android:color/white"
+                android:tag="rectangle"
+                android:padding="0dp"
+                android:onClick="SetShape"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/shape3" />
+            <ImageButton
+                android:src="@drawable/save"
+                android:background="@android:color/white"
+                android:tag="rectangle"
+                android:padding="0dp"
+                android:onClick="Save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/save" />
+            <ImageButton
+                android:src="@drawable/undo"
+                android:background="@android:color/white"
+                android:tag="rectangle"
+                android:padding="0dp"
+                android:onClick="Undo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/undo" />
+        </LinearLayout>
+        <bouboudraw.DrawingView
+            android:id="@+id/drawView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</LinearLayout>
