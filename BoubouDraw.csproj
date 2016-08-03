@@ -117,6 +117,34 @@
     <AndroidResource Include="Resources\drawable-xhdpi\undo.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\save.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\undo.png" />
+    <AndroidResource Include="Resources\drawable\redo.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\redo.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\redo.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\redo.png" />
+    <AndroidResource Include="Resources\values\Dimensions.xml" />
+    <AndroidResource Include="Resources\drawable\delete.png" />
+    <AndroidResource Include="Resources\drawable\size.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\.DS_Store" />
+    <AndroidResource Include="Resources\drawable-hdpi\delete.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\redo.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\size.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\delete.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\size.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\delete.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\size.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\delete.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\size.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\brush.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\circle.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\delete.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\line.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\rectangle.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\redo.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\save.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\size.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\undo.png" />
+    <AndroidResource Include="Resources\drawable\rainbow.png" />
+    <AndroidResource Include="Resources\values\Colors.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />

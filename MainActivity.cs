@@ -8,6 +8,8 @@ using Android.Util;
 using System.Collections.Generic;
 using Android.Graphics.Drawables;
 using Java.Interop;
+using System.Threading.Tasks;
+using System.Threading;
 
 
 // Free textures: http://shizoo-design.de/patterns.php?page=2
@@ -42,7 +44,30 @@ namespace BoubouDraw
 			var textureName = imageButton.Tag.ToString();
 			DrawingView.SetPaint(textureName);
 		}
+		
+		[Export("SetSize")]
+		public void SetSize(View v)
+		{
+			var imageButton = v as ImageButton;
+			var sizeName = imageButton.Tag.ToString();
+			var size = (sizeName == "large") ? 48f :
+						(sizeName == "medium") ? 16f : 8f;
+						
+			DrawingView.SetSize(size);
+		}
 
+		[Export("SetRandomColors")]
+		public void SetRandomColors(View v)
+		{
+			DrawingView.SetRandomColors();
+		}
+		
+		[Export("Clear")]
+		public void Clear(View v)
+		{
+			DrawingView.Clear();
+		}
+		
 		[Export("Save")]
 		public void Save(View v)
 		{
@@ -53,6 +78,12 @@ namespace BoubouDraw
 		public void Undo(View v)
 		{
 			DrawingView.Undo();
+		}
+		
+		[Export("Redo")]
+		public void Redo(View v)
+		{
+			DrawingView.Redo();
 		}
 
 		[Export("SetShape")]
@@ -106,6 +137,17 @@ namespace BoubouDraw
 		{
 			Activity = context as Activity;
 			SurfaceHolder = Holder;
+			Task.Run(() =>
+			{
+				while (!SurfaceHolder.Surface.IsValid)
+				{
+					Thread.Sleep(200);
+				}
+
+				var canvas = SurfaceHolder.LockCanvas();
+				canvas.DrawColor(BackgroundColor);
+				SurfaceHolder.UnlockCanvasAndPost(canvas);
+			});
 		}
 
 		private ISurfaceHolder SurfaceHolder;
@@ -114,7 +156,7 @@ namespace BoubouDraw
 
 		private Color CurrentColor { get; set; } = Color.Pink;
 
-		private float CurrentSize = 8f;
+		private float CurrentSize = 24f;
 
 		private ShapeKind CurrentShape { get; set; } = ShapeKind.FreeStyle;
 
@@ -132,6 +174,8 @@ namespace BoubouDraw
 				paint.Color = color;
 				paint.StrokeWidth = size;
 				paint.SetStyle(Paint.Style.Fill);
+				paint.StrokeCap = Paint.Cap.Round;
+    			paint.StrokeJoin = Paint.Join.Round;
 				Paints.Add(key, paint);
 			}
 
@@ -152,6 +196,8 @@ namespace BoubouDraw
 				paint.SetShader(new BitmapShader(bm, Shader.TileMode.Repeat, Shader.TileMode.Repeat));
 				paint.StrokeWidth = strokeWidth;
 				paint.SetStyle(Paint.Style.Fill);
+				paint.StrokeCap = Paint.Cap.Round;
+    			paint.StrokeJoin = Paint.Join.Round;
 				Paints.Add(key, paint);
 			}
 
@@ -163,24 +209,64 @@ namespace BoubouDraw
 			CurrentShape = shapeKind;
 		}
 
+		private bool randomizeColor = false;
 		public void SetPaint(Color color)
 		{
+			randomizeColor = false;
 			CurrentPaint = GetPaint(color, CurrentSize);
 			CurrentColor = color;
 			CurrentTexture = "";
 		}
+		
+		public void SetRandomColors()
+		{
+			randomizeColor = true;
+		}
+		
+		public void Clear()
+		{
+			var shape = new Shape(new PointF(0, 0), new PointF(this.Width, this.Height), BackgroundColor, "", 0, ShapeKind.Rectangle, GetPaint(BackgroundColor, 0));
+			Shapes.Add(shape);
+			if (SurfaceHolder.Surface.IsValid)
+			{
+				var canvas = SurfaceHolder.LockCanvas();
+				ShowShapes(canvas);
+				SurfaceHolder.UnlockCanvasAndPost(canvas);
+			}
+		}
 
 		public void SetPaint(string textureName)
 		{
+			randomizeColor = false;
 			CurrentPaint = GetPaint(textureName, CurrentSize);
 			CurrentTexture = textureName;
 		}
 
+		public void SetSize(float size)
+		{
+			CurrentSize = size;
+			CurrentPaint = !string.IsNullOrEmpty(CurrentTexture) ?
+				GetPaint(CurrentTexture, CurrentSize) :
+				GetPaint(CurrentColor, CurrentSize);
+		}
+		
 		public void Undo()
 		{
 			if (Shapes.Count > 0)
 			{
+				ShapeGarbage.Push(Shapes[Shapes.Count - 1]);
 				Shapes.RemoveAt(Shapes.Count - 1);
+				var canvas = SurfaceHolder.LockCanvas();
+				ShowShapes(canvas);
+				SurfaceHolder.UnlockCanvasAndPost(canvas);
+			}
+		}
+		
+		public void Redo()
+		{
+			if (ShapeGarbage.Count > 0)
+			{
+				Shapes.Add(ShapeGarbage.Pop());
 				var canvas = SurfaceHolder.LockCanvas();
 				ShowShapes(canvas);
 				SurfaceHolder.UnlockCanvasAndPost(canvas);
@@ -198,7 +284,8 @@ namespace BoubouDraw
 		    var fileName = string.Format("draw-{0:yyyy-MM-dd_hh-mm-ss-tt}.png", System.DateTime.Now);
 			var location = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath;
 			System.IO.File.WriteAllBytes(System.IO.Path.Combine(location, fileName), stream.ToArray());
-			Toast.MakeText(Activity, "Saved", ToastLength.Short);
+			var toast = Toast.MakeText(Activity, "Saved", ToastLength.Short);
+			toast.Show();
 			bitmap.Dispose();
 		}
 
@@ -210,7 +297,6 @@ namespace BoubouDraw
 
 			if (SurfaceHolder.Surface.IsValid)
 			{
-
 				var canvas = SurfaceHolder.LockCanvas();
 				ShowShapes(canvas);
 				PreviewAndAddShape(canvas, pos, e);
@@ -252,37 +338,71 @@ namespace BoubouDraw
 
 			if (CurrentShape == ShapeKind.FreeStyle || e.Action == MotionEventActions.Up)
 			{
+				if (randomizeColor)
+				{
+					CurrentColor = GetRandomColor();
+				}
+				
 				Shapes.Add(shape);
 			}
 
 			_linkPreviousPos = pos;
 		}
 
+
+		private System.Random random = new System.Random();
+		private Color GetRandomColor()
+		{
+			var rnd = random.Next(16);
+			var color = Activity.Resources.GetColor(Activity.Resources.GetIdentifier("c" + rnd.ToString().PadLeft(3, '0'), "color", Activity.PackageName));
+			return color;
+		}
+		
 		private void DrawShape(Canvas canvas, Shape shape)
 		{
+			var startX = shape.Start.X;
+			var endX = shape.End.X;
+			var startY = shape.Start.Y;
+			var endY = shape.End.Y;
+
+			if (shape.ShapeKind == ShapeKind.Circle || shape.ShapeKind == ShapeKind.Rectangle)
+			{
+				// Allow displaying paint in negative rectangle for rectangles and ovals
+				if (endX < startX)
+				{
+					var newStartX = endX;
+					endX = startX;
+					startX = newStartX;
+				}
+				
+				if (endY < startY)
+				{
+					var newStartY = endY;
+					endY = startY;
+					startY = newStartY;
+				}
+			}
+			
 			switch (shape.ShapeKind)
 			{
 				case ShapeKind.FreeStyle:
 					if (shape.LinkToPrevious)
 					{
-						canvas.DrawLine(shape.Start.X, shape.Start.Y, shape.End.X, shape.End.Y, shape.Paint);
+						canvas.DrawLine(startX, startY, endX, endY, shape.Paint);
 					}
 					else
 					{
-						canvas.DrawPoint(shape.End.X, shape.End.Y, shape.Paint);
+						canvas.DrawPoint(endX, endY, shape.Paint);
 					}
 					break;
 				case ShapeKind.Circle:
-					var radius = (shape.End.X - shape.Start.X) / 2;
-					var x = shape.Start.X + radius;
-					var y = shape.Start.Y + radius;
-					canvas.DrawCircle(x, y, radius, shape.Paint);
+					canvas.DrawOval(new RectF(startX, startY, endX, endY), shape.Paint);
 					break;
 				case ShapeKind.Line:
-					canvas.DrawLine(shape.Start.X, shape.Start.Y, shape.End.X, shape.End.Y, shape.Paint);
+					canvas.DrawLine(startX, startY, endX, endY, shape.Paint);
 					break;
 				case ShapeKind.Rectangle:
-					canvas.DrawRect(shape.Start.X, shape.Start.Y, shape.End.X, shape.End.Y, shape.Paint);
+					canvas.DrawRect(startX, startY, endX, endY, shape.Paint);
 					break;
 				default:
 					break;
@@ -290,6 +410,7 @@ namespace BoubouDraw
 		}
 
 		public List<Shape> Shapes = new List<Shape>();
+		public Stack<Shape> ShapeGarbage = new Stack<Shape>();
 
 		public class Shape
 		{
@@ -319,7 +440,7 @@ namespace BoubouDraw
 			public ShapeKind ShapeKind { get; set; }
 
 			public bool LinkToPrevious { get; set; }
-
+			
 			public override bool Equals(object obj)
 			{
 				var shape = (Shape)obj;

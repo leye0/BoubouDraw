@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="c000">#f00</color>
+	<color name="c001">#0f0</color>
+	<color name="c002">#00f</color>
+	<color name="c003">#ff0</color>
+	<color name="c004">#0ff</color>
+	<color name="c005">#f0f</color>
+	<color name="c006">#f90</color>
+	<color name="c007">#09f</color>
+	<color name="c008">#0f9</color>
+	<color name="c009">#90f</color>
+	<color name="c010">#950</color>
+	<color name="c011">#000</color>
+	<color name="c012">#aaa</color>
+	<color name="c013">@android:color/holo_blue_bright</color>
+	<color name="c014">@android:color/holo_green_dark</color>
+	<color name="c015">@android:color/white</color>
+</resources>
